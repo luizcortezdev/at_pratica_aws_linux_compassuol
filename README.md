@@ -105,36 +105,23 @@ nano apache_verificador.sh
 ```ruby
 #!/bin/bash
 
-# Diretório NFS
-NFS_DIR="/caminho/do/seu/diretorio/nfs"
+NFS_DIR="/mnt/luiz"
 
-# Nome do serviço
-SERVICO="Apache"
-
-# Data e Hora
 DATA_HORA=$(date +"%Y-%m-%d %H:%M:%S")
 
-# Verifica se o Apache está rodando
 systemctl is-active --quiet httpd
 
-# Captura o código de saída do comando anterior
 CODIGO_SAIDA=$?
 
-# Arquivo de saída para o serviço ONLINE
 ARQUIVO_ONLINE="${NFS_DIR}/${DATA_HORA}_Online_${SERVICO}.txt"
 
-# Arquivo de saída para o serviço OFFLINE
 ARQUIVO_OFFLINE="${NFS_DIR}/${DATA_HORA}_Offline_${SERVICO}.txt"
 
-# Mensagem padrão
-MENSAGEM="Status do serviço ${SERVICO} em ${DATA_HORA}:"
-
-# Verifica o status do serviço e gera o arquivo correspondente
 if [ $CODIGO_SAIDA -eq 0 ]; then
-    echo "${MENSAGEM} ONLINE" > "${ARQUIVO_ONLINE}"
+    echo "Status do serviço apache em ${DATA_HORA}: ONLINE" > "${ARQUIVO_ONLINE}"
     echo "Apache está rodando. Arquivo ONLINE gerado em: ${ARQUIVO_ONLINE}"
 else
-    echo "${MENSAGEM} OFFLINE" > "${ARQUIVO_OFFLINE}"
+    echo "Status do serviço apache em ${DATA_HORA}: OFFLINE" > "${ARQUIVO_OFFLINE}"
     echo "Apache não está rodando. Arquivo OFFLINE gerado em: ${ARQUIVO_OFFLINE}"
 fi
 
